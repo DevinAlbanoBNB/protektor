@@ -1,0 +1,26 @@
+[
+  {
+    "id": "protektor",
+    "source": "assets/images/protektor.png"
+  },
+  {
+    "id": "ship1",
+    "source": "assets/images/ship1.png"
+  },
+  {
+    "id": "ship2",
+    "source": "assets/images/ship2.png"
+  },
+  {
+    "id": "ship3",
+    "source": "assets/images/ship3.png"
+  },
+  {
+    "id": "bullet",
+    "source": "assets/images/bullet.png"
+  },
+  {
+    "id": "sine_ship",
+    "source": "assets/images/sine_ship.png"
+  }
+]
