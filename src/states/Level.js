@@ -16,7 +16,7 @@ export default class Level extends Phaser.State {
   }
 
   update () {
-    this.physics.arcade.collide(this.player.sprite, this.enemy.sprite)
-    this.physics.arcade.collide(this.enemy.sprite, this.player.bullets)
+    this.physics.arcade.overlap(this.player.sprite, this.enemy.sprite)
+    this.physics.arcade.overlap(this.enemy.sprite, this.player.bullets)
   }
 }

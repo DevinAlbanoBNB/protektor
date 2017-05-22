@@ -22,11 +22,14 @@ export default class Enemy {
   setupPhysics () {
     this.game.physics.enable(this.sprite, Phaser.Physics.ARCADE)
     this.sprite.body.velocity.y = 100
+    this.sprite.body.maxVelocity.y = 100
+    this.sprite.body.acceleration.y = 50
+    this.sprite.body.bounce = 0.5 
   }
 
   setupCollisions () {
-    this.sprite.body.onCollide = new Phaser.Signal()
-    this.sprite.body.onCollide.add((me, other) => {
+    this.sprite.body.onOverlap = new Phaser.Signal()
+    this.sprite.body.onOverlap.add((me, other) => {
       other.type = other.type || ''
 
       if (other._type === 'weapon') {

@@ -29,8 +29,8 @@ export default class Player {
   }
 
   setupCollisions () {
-    this.sprite.body.onCollide = new Phaser.Signal()
-    this.sprite.body.onCollide.add((me, other) => {
+    this.sprite.body.onOverlap = new Phaser.Signal()
+    this.sprite.body.onOverlap.add((me, other) => {
       other.type = other.type || '' 
 
       if (other.type === 'enemy') {
