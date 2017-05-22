@@ -8,7 +8,8 @@ export default class Player extends Phaser.Sprite {
     super(game, center.x, center.y, 'protektor')
 
     this._direction = Direction.right
-    this._health = 5
+    this.health = 5
+    this.maxHealth = 5
 
     this.bullets = this.game.add.group()
 
@@ -36,8 +37,8 @@ export default class Player extends Phaser.Sprite {
       other.type = other.type || '' 
 
       if (other._type === 'enemy') {
-        this._health -= other._damage  
-        other._health = 0
+        this.damage(other._damage)
+        other.kill()
       }
     }, this.game)
   }

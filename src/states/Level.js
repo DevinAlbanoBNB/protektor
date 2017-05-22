@@ -13,15 +13,16 @@ export default class Level extends Phaser.State {
 
   create () {
     this.player = new Player(this.game)
-    this.enemy = new Enemy(this.game, { id: 'ship1', speed: 100, direction: Direction.down })
+    this.enemies = this.game.add.group()
+    let enemy = new Enemy(this.game, { id: 'ship1', speed: 100, direction: Direction.down })
+    this.enemies.add(enemy)
+
+    this.timer = 0
   }
 
   update () {
-    this.physics.arcade.overlap(this.player, this.enemy)
-    this.physics.arcade.overlap(this.enemy, this.player.bullets)
-
-    if (this.enemy._health <= 0) {
-      this.enemy.kill()
-    }
+    this.timer += 1
+    this.physics.arcade.overlap(this.player, this.enemies)
+    this.physics.arcade.overlap(this.enemies, this.player.bullets)
   }
 }
