@@ -1,6 +1,7 @@
 import Phaser from 'phaser'
 import Player from '../gameObjects/Player'
-import Enemy from '../gameObjects/Enemy'
+import Enemy from '../sprites/Enemy'
+import * as Direction from '../constants/Direction'
 
 export default class Level extends Phaser.State {
   init () {
@@ -12,11 +13,11 @@ export default class Level extends Phaser.State {
 
   create () {
     this.player = new Player(this.game)
-    this.enemy = new Enemy(this.game)
+    this.enemy = new Enemy(this.game, { id: 'ship1', speed: 100, direction: Direction.down })
   }
 
   update () {
-    this.physics.arcade.overlap(this.player.sprite, this.enemy.sprite)
-    this.physics.arcade.overlap(this.enemy.sprite, this.player.bullets)
+    this.physics.arcade.overlap(this.player.sprite, this.enemy)
+    this.physics.arcade.overlap(this.enemy, this.player.bullets)
   }
 }

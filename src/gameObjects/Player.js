@@ -33,9 +33,9 @@ export default class Player {
     this.sprite.body.onOverlap.add((me, other) => {
       other.type = other.type || '' 
 
-      if (other.type === 'enemy') {
-        this.health -= other.damage  
-        other.health = 0
+      if (other._type === 'enemy') {
+        this.health -= other._damage  
+        other._health = 0
       }
     }, this.game)
   }
