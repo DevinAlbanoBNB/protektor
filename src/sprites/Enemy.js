@@ -40,10 +40,6 @@ export default class Enemy extends Phaser.Sprite {
         me._health -= other._damage
         other.kill()
       }
-
-      if (me._health <= 0) {
-        me.destroy()
-      }
     }, this.game)
   }
 }

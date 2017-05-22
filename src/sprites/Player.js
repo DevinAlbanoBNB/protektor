@@ -2,13 +2,17 @@ import Phaser from 'phaser'
 import Bullet from '../sprites/Bullet'
 import * as Direction from '../constants/Direction'
 
-export default class Player {
+export default class Player extends Phaser.Sprite {
   constructor (game) {
-    this.game = game
-    this.direction = Direction.right
-    this.health = 5
+    let center = { x: game.world.centerX, y: game.world.centerY }
+    super(game, center.x, center.y, 'protektor')
+
+    this._direction = Direction.right
+    this._health = 5
 
     this.bullets = this.game.add.group()
+
+    this.game.stage.addChild(this)
 
     this.setupSprite()
     this.setupPhysics()
@@ -18,23 +22,21 @@ export default class Player {
   }
 
   setupSprite () {
-    this.sprite = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'protektor')
-    this.sprite.anchor.set(0.5)
-    this.sprite.scale.setTo(2)
+    this.anchor.set(0.5)
+    this.scale.setTo(2)
   }
 
   setupPhysics () {
-    this.game.physics.enable(this.sprite, Phaser.Physics.ARCADE)
-    this.sprite.body.immovable = true
+    this.game.physics.enable(this, Phaser.Physics.ARCADE)
   }
 
   setupCollisions () {
-    this.sprite.body.onOverlap = new Phaser.Signal()
-    this.sprite.body.onOverlap.add((me, other) => {
+    this.body.onOverlap = new Phaser.Signal()
+    this.body.onOverlap.add((me, other) => {
       other.type = other.type || '' 
 
       if (other._type === 'enemy') {
-        this.health -= other._damage  
+        this._health -= other._damage  
         other._health = 0
       }
     }, this.game)
@@ -44,30 +46,30 @@ export default class Player {
     this.cursors = this.game.input.keyboard.createCursorKeys()
 
     this.cursors.left.onDown.dispatch = () => {
-      this.sprite.angle = Direction.left
-      this.direction = Direction.left
+      this.angle = Direction.left
+      this._direction = Direction.left
     }
 
     this.cursors.right.onDown.dispatch = () => {
-      this.sprite.angle = Direction.right
-      this.direction = Direction.right
+      this.angle = Direction.right
+      this._direction = Direction.right
     }
 
     this.cursors.up.onDown.dispatch = () => {
-      this.sprite.angle = Direction.up 
-      this.direction = Direction.up
+      this.angle = Direction.up 
+      this._direction = Direction.up
     }
 
     this.cursors.down.onDown.dispatch = () => {
-      this.sprite.angle = Direction.down
-      this.direction = Direction.down
+      this.angle = Direction.down
+      this._direction = Direction.down
     }
   }
 
   setupShootButton () {
     this.shootButton = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR)
     this.shootButton.onDown.dispatch = () => {
-      let bullet = new Bullet(this.game, { direction: this.direction })
+      let bullet = new Bullet(this.game, { direction: this._direction })
       this.bullets.add(bullet)
     }
   }

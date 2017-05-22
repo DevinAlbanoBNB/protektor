@@ -1,5 +1,5 @@
 import Phaser from 'phaser'
-import Player from '../gameObjects/Player'
+import Player from '../sprites/Player'
 import Enemy from '../sprites/Enemy'
 import * as Direction from '../constants/Direction'
 
@@ -17,7 +17,11 @@ export default class Level extends Phaser.State {
   }
 
   update () {
-    this.physics.arcade.overlap(this.player.sprite, this.enemy)
+    this.physics.arcade.overlap(this.player, this.enemy)
     this.physics.arcade.overlap(this.enemy, this.player.bullets)
+
+    if (this.enemy._health <= 0) {
+      this.enemy.kill()
+    }
   }
 }
