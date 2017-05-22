@@ -1,5 +1,5 @@
 import Phaser from 'phaser'
-import Bullet from './Bullet'
+import Bullet from '../sprites/Bullet'
 import * as Direction from '../constants/Direction'
 
 export default class Player {
@@ -7,6 +7,8 @@ export default class Player {
     this.game = game
     this.direction = Direction.right
     this.health = 5
+
+    this.bullets = this.game.add.group()
 
     this.setupSprite()
     this.setupPhysics()
@@ -65,7 +67,8 @@ export default class Player {
   setupShootButton () {
     this.shootButton = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR)
     this.shootButton.onDown.dispatch = () => {
-      this.bullet = new Bullet(this.game, this.direction, 200, 'weapon')
+      let bullet = new Bullet(this.game, { direction: this.direction })
+      this.bullets.add(bullet)
     }
   }
 }

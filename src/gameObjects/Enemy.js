@@ -16,7 +16,7 @@ export default class Enemy {
 
     this.sprite.type = 'enemy'
     this.sprite.damage = 1
-    this.sprite.health = 1
+    this.sprite.health = 2
   }
 
   setupPhysics () {
@@ -29,9 +29,9 @@ export default class Enemy {
     this.sprite.body.onCollide.add((me, other) => {
       other.type = other.type || ''
 
-      if (other.type === 'weapon') {
-        me.health -= other.damage
-        other.health = 0
+      if (other._type === 'weapon') {
+        me.health -= other._damage
+        other.kill()
       }
 
       if (me.health <= 0) {
