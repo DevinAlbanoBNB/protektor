@@ -12,7 +12,6 @@ export default class Enemy extends Phaser.Sprite {
 
     this.setupSprite()
     this.setupPhysics()
-    this.setupCollisions()
   }
 
   static getCoordinates (game, direction) {
@@ -56,17 +55,5 @@ export default class Enemy extends Phaser.Sprite {
   setupPhysics () {
     this.game.physics.enable(this, Phaser.Physics.ARCADE)
     this.game.physics.arcade.velocityFromAngle(this._direction, this._speed, this.body.velocity)
-  }
-
-  setupCollisions () {
-    this.body.onOverlap = new Phaser.Signal()
-    this.body.onOverlap.add((me, other) => {
-      other.type = other.type || ''
-
-      if (other._type === 'weapon') {
-        me.damage(other._damage)
-        other.kill()
-      }
-    }, this.game)
   }
 }

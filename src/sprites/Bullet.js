@@ -15,6 +15,7 @@ export default class Bullet extends Phaser.Sprite {
 
     this.setupSprite()
     this.setupPhysics()
+    this.setupCollisions()
   }
 
   setupSprite () {
@@ -30,5 +31,17 @@ export default class Bullet extends Phaser.Sprite {
     this.game.physics.arcade.velocityFromAngle(this._direction, this._speed, this.body.velocity)
     this.outOfBoundsKill = true
     this.checkWorldBounds = true
+  }
+
+  setupCollisions () {
+    this.body.onOverlap = new Phaser.Signal()
+    this.body.onOverlap.add((me, other) => {
+      other.type = other.type || ''
+
+      if (other._type === 'enemy') {
+        other.damage(me._damage)
+        me.kill()
+      }
+    }, this.game)
   }
 }
