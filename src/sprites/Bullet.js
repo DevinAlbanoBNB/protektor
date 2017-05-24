@@ -34,6 +34,10 @@ export default class Bullet extends Phaser.Sprite {
     this.checkWorldBounds = true
   }
 
+  /**
+   * Damages enemies. Resets self to -4,-4. Sets flag to die.
+   * Will die in update.
+   **/
   setupCollisions () {
     this.body.onOverlap = new Phaser.Signal()
     this.body.onOverlap.add((me, other) => {
@@ -47,6 +51,9 @@ export default class Bullet extends Phaser.Sprite {
     }, this.game)
   }
 
+  /**
+   * Called in Stage's update function.
+   **/
   update () {
     if (this.readyToDie) {
       this.kill()

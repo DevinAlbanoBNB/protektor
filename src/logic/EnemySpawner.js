@@ -1,5 +1,8 @@
 import Pattern from './Pattern'
 
+/**
+ * Reads level data from a JSON file and creates patterns.
+ **/
 export default class EnemySpawner {
   constructor (stage, levelId) {
     console.log(levelId)

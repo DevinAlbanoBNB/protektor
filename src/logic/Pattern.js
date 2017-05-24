@@ -1,5 +1,11 @@
 import Enemy from '../sprites/Enemy'
 
+/**
+ * Creates enemies in a pattern.
+ * Currently working straight from the Enemy Sprite.
+ * This will be updated to work with more classes
+ * when I code behavior for different enemy types.
+ **/
 export default class Pattern {
   constructor (stage, patternData) {
     this.stage = stage

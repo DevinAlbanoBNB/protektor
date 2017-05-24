@@ -60,6 +60,11 @@ export default class Enemy extends Phaser.Sprite {
     this.game.physics.arcade.velocityFromAngle(this._direction, this._speed, this.body.velocity)
   }
 
+  /**
+   * Called in Stage's update function.
+   * The code here was used for testing the Sine Ship. It will be
+   * moved into a SineShip class.
+   **/
   update () {
     this._frame += 1
 

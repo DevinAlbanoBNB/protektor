@@ -31,6 +31,10 @@ export default class Player extends Phaser.Sprite {
     this.game.physics.enable(this, Phaser.Physics.ARCADE)
   }
 
+  /**
+   * Only needs to test vs enemies. Take damage based
+   * on enemy's _damage stat.
+   **/
   setupCollisions () {
     this.body.onOverlap = new Phaser.Signal()
     this.body.onOverlap.add((me, other) => {
@@ -67,6 +71,10 @@ export default class Player extends Phaser.Sprite {
     }
   }
 
+  /**
+   * Default is a max of three bullets at a time. This can
+   * be modified with a powerup later.
+   **/
   setupShootButton () {
     this.shootButton = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR)
     this.shootButton.onDown.dispatch = () => {
@@ -82,6 +90,10 @@ export default class Player extends Phaser.Sprite {
     }
   }
 
+  /**
+   * Called in Stage's update function. This is for cleaning
+   * up all the marked-for-death bullets.
+   **/
   update () {
     this.bullets.forEach((bullet) => bullet.update())
   }
