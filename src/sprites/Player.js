@@ -70,8 +70,19 @@ export default class Player extends Phaser.Sprite {
   setupShootButton () {
     this.shootButton = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR)
     this.shootButton.onDown.dispatch = () => {
-      let bullet = new Bullet(this.game, { direction: this._direction })
-      this.bullets.add(bullet)
+      if (this.bullets.countLiving() < 3) {
+        let bullet = new Bullet(this.game, { direction: this._direction })
+        this.bullets.add(bullet)
+      } else {
+        let bullet = this.bullets.getFirstExists(false)
+        if (bullet) {
+          bullet.reset(this.x, this.y)
+        }
+      }
     }
+  }
+
+  update () {
+    this.bullets.forEach((bullet) => bullet.update())
   }
 }

@@ -12,6 +12,7 @@ export default class Enemy extends Phaser.Sprite {
 
     this.setupSprite()
     this.setupPhysics()
+    this._frame = 0
   }
 
   static getCoordinates (game, direction) {
@@ -42,6 +43,7 @@ export default class Enemy extends Phaser.Sprite {
     this._speed = stats.speed || 200
     this._direction = Direction.map[stats.direction]
     this._type = stats.type || 'enemy'
+    this._id = stats.id
     this.angle = this._direction
   }
 
@@ -56,5 +58,14 @@ export default class Enemy extends Phaser.Sprite {
   setupPhysics () {
     this.game.physics.enable(this, Phaser.Physics.ARCADE)
     this.game.physics.arcade.velocityFromAngle(this._direction, this._speed, this.body.velocity)
+  }
+
+  update () {
+    this._frame += 1
+
+    if (this._id === 'sine_ship') {
+      this.angle = this._direction + 30 * Math.cos(this._frame / 40)
+      this.game.physics.arcade.velocityFromAngle(this._direction + (30 * Math.cos(this._frame / 40)), this._speed, this.body.velocity)
+    }
   }
 }

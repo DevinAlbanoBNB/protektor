@@ -1,6 +1,6 @@
 import Phaser from 'phaser'
 import Player from '../sprites/Player'
-import Enemy from '../sprites/Enemy'
+import Pattern from '../logic/Pattern'
 
 export default class Level extends Phaser.State {
   init () {
@@ -14,57 +14,18 @@ export default class Level extends Phaser.State {
     this.player = new Player(this.game)
     this.enemies = this.game.add.group()
 
-    this.pattern = [
-      {
-        'id': 'ship1',
-        'speed': 100,
-        'direction': 'down'
-      },
-      {
-        'id': 'ship1',
-        'speed': 200,
-        'direction': 'left'
-      },
-      {
-        'id': 'ship2',
-        'speed': 100,
-        'health': 2,
-        'direction': 'down'
-      },
-      {
-        'id': 'ship1',
-        'speed': 200,
-        'direction': 'up'
-      },
-      {
-        'id': 'ship1',
-        'speed': 100,
-        'direction': 'down'
-      },
-      {
-        'id': 'ship3',
-        'speed': 100,
-        'health': 3,
-        'direction': 'left'
-      }
-    ]
+    this.pattern = new Pattern(this)
 
-    this.timer = this.game.time.create(false)
-    this.timer.loop(2000, () => {
-      let stats = this.pattern.shift()
-      let enemy = new Enemy(this.game, stats)
-
-      this.enemies.add(enemy)
-
-      if (this.pattern.length === 0) {
-        this.timer.stop()
-      }
-    }, this)
-    this.timer.start()
+    this.pattern.run(100, 2000)
+    this.pattern.run(200, 1000)
+    this.pattern.run(300, 500)
   }
 
   update () {
     this.physics.arcade.overlap(this.player, this.enemies)
     this.physics.arcade.overlap(this.player.bullets, this.enemies)
+
+    this.player.update()
+    this.enemies.forEach((enemy) => enemy.update())
   }
 }

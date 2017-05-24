@@ -10,6 +10,7 @@ export default class Bullet extends Phaser.Sprite {
     this._speed = stats.speed || 200
     this._direction = stats.direction
     this._type = stats.type || 'weapon'
+    this.readyToDie = false
     
     this.game.stage.addChild(this)
 
@@ -36,12 +37,19 @@ export default class Bullet extends Phaser.Sprite {
   setupCollisions () {
     this.body.onOverlap = new Phaser.Signal()
     this.body.onOverlap.add((me, other) => {
-      other.type = other.type || ''
+      other._type = other._type || ''
 
       if (other._type === 'enemy') {
         other.damage(me._damage)
-        me.kill()
+        me.reset()
+        me.readyToDie = true
       }
     }, this.game)
+  }
+
+  update () {
+    if (this.readyToDie) {
+      this.kill()
+    }
   }
 }
