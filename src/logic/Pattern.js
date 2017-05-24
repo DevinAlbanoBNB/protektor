@@ -1,67 +1,27 @@
 import Enemy from '../sprites/Enemy'
 
 export default class Pattern {
-  constructor (stage) {
+  constructor (stage, patternData) {
     this.stage = stage
     this.game = stage.game
+    this.pattern = patternData.pattern
+    this.startDelay = patternData.start_delay
+    this.loopDelay = patternData.loop_delay
   }
 
-  getPattern () {
-    return [
-      {
-        'id': 'ship1',
-        'speed': 100,
-        'direction': 'down'
-      },
-      {
-        'id': 'sine_ship',
-        'speed': 200,
-        'direction': 'left'
-      },
-      {
-        'id': 'ship2',
-        'speed': 100,
-        'health': 2,
-        'direction': 'down'
-      },
-      {
-        'id': 'sine_ship',
-        'speed': 200,
-        'direction': 'right'
-      },
-      {
-        'id': 'ship1',
-        'speed': 200,
-        'direction': 'up'
-      },
-      {
-        'id': 'ship1',
-        'speed': 100,
-        'direction': 'right'
-      },
-      {
-        'id': 'ship3',
-        'speed': 100,
-        'health': 3,
-        'direction': 'left'
-      }
-    ]
-  }
-
-  run (startDelay, loopDelay) {
-    let pattern = this.getPattern()
-
+  run () {
     let timer = this.game.time.create(false)
-    timer.loop(loopDelay, () => {
-      let stats = pattern.shift()
+
+    timer.loop(this.loopDelay, () => {
+      let stats = this.pattern.shift()
       let enemy = new Enemy(this.game, stats)
 
       this.stage.enemies.add(enemy)
 
-      if (pattern.length === 0) {
+      if (this.pattern.length === 0) {
         timer.stop()
       }
     }, this)
-    timer.start(startDelay)
+    timer.start(this.startDelay)
   }
 }

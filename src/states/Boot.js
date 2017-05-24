@@ -22,6 +22,7 @@ export default class Boot extends Phaser.State {
     // Load anything you need for the preloader (e.g. loading bars) here
     this.load.image('loaderBar', 'assets/images/loader-bar.png')
     this.load.text('imageAssets', 'assets/json/images.json')
+    this.load.text('level1', 'assets/json/levels/level1.json')
   }
 
   create () {
