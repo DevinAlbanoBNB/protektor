@@ -3,7 +3,7 @@ import * as Direction from '../constants/Direction'
 
 export default class Enemy extends Phaser.Sprite {
   constructor (game, stats) {
-    let coordinates = Enemy.getCoordinates(game, stats.direction)
+    let coordinates = Enemy.getCoordinates(game, Direction.map[stats.direction])
     super(game, coordinates.x, coordinates.y, stats.id)
 
     this.setStats(stats)
@@ -40,8 +40,9 @@ export default class Enemy extends Phaser.Sprite {
     this.health = stats.health || 1
     this.maxHealth = stats.health || 1
     this._speed = stats.speed || 200
-    this._direction = stats.direction
+    this._direction = Direction.map[stats.direction]
     this._type = stats.type || 'enemy'
+    this.angle = this._direction
   }
 
   setupSprite () {
